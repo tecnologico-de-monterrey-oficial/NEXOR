@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+  body { opacity: 0; }
+  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OXXO Store Dashboard</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Splash Loader -->
+<div id="splash-screen">
+  <div class="splash-logo-box">
+    <img src="assets/oxxo_logo.png" alt="OXXO Logo" class="splash-logo" />
+  </div>
+</div>
+
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-container">
+        <img src="assets/oxxo_logo.png" alt="OXXO Logo" class="logo" />
+      </div>
+      <h1 class="main-title">OXXO Store Dashboard</h1>
+    </div>
+  </header>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+  <button id="filter-toggle" class="toggle-btn">Manual Filters ⯆</button>
+
+  
+
+  <!-- Filters are grouped here -->
+<div id="filter-content" class="filter-content">
+  <label><input type="checkbox" class="info-toggle" value="showInsideNuevoLeon" checked> Mostrar dentro de Nuevo León</label>
+  <label><input type="checkbox" class="info-toggle" value="showOutsideNuevoLeon" checked> Mostrar fuera de Nuevo León</label>
+  <label><input type="checkbox" class="manual-filter-toggle" value="showPoints" checked>Mostrar calles</label>
+  <label><input type="checkbox" class="info-toggle" value="MTS2VENTAS_NUM" checked> Sales Area (m²)</label>
+  <label><input type="checkbox" class="info-toggle" value="ENTORNO_DES" checked> Environment Type</label>
+  <label><input type="checkbox" class="info-toggle" value="NIVELSOCIOECONOMICO_DES" checked> Socioeconomic Level</label>
+  <label><input type="checkbox" class="info-toggle" value="Porcentaje_Exito" checked> Store Success %</label>
+  <label><input type="checkbox" class="info-toggle" value="socioLayer" checked> Show Socioeconomic Regions</label>
+  <label><input type="checkbox" class="info-toggle" value="popTrafficLayer" checked> Show Pop/Traffic Regions</label>
+  <label><input type="checkbox" class="info-toggle" value="municipalIncomeLayer" checked> Show Municipal Monthly Income</label>
+  <label><input type="checkbox" class="info-toggle" value="showCompetition" checked> Show Nearest Competition</label>
+  <label><input type="checkbox" class="info-toggle" value="municipalPopulationLayer" checked> Mostrar población por municipio</label>
+
+  <hr style="margin: 15px 0; border-top: 1px solid white;" />
+
+  <h3>Plot Manual Coordinates</h3>
+  <label for="input-lat">Latitude (Y)</label>
+  <input type="number" step="0.0001" id="input-lat" placeholder="e.g. 25.67" />
+  <label for="input-lon">Longitude (X)</label>
+  <input type="number" step="0.0001" id="input-lon" placeholder="e.g. -100.25" />
+  <button id="plot-point">Plot Location</button>
+
+</div>
+
+<div id="info-box" class="info-box">
+  <div class="info-box-header" onclick="toggleInfoBox()">
+    <span>Información</span>
+    <span id="info-arrow">▶</span>
+  </div>
+  <div class="info-box-content">
+    <p>Esto es contenido de prueba dentro de la caja.</p>
+  </div>
+</div>
+
+
+</aside>
+
+    <!-- MAIN SECTION -->
+    <main>
+      <div id="map"></div>
+      <div id="detail-tables">
+        <h2>Location details</h2>
+        <div id="tables-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- JS INCLUDES -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Sidebar Toggle Script -->
+  <script>
+    const toggleButton = document.getElementById("filter-toggle");
+    const filterContent = document.getElementById("filter-content");
+
+    toggleButton.addEventListener("click", () => {
+      filterContent.classList.toggle("hidden");
+      toggleButton.textContent = filterContent.classList.contains("hidden")
+        ? "Manual Filters ⯈"
+        : "Manual Filters ⯆";
+    });
+  </script>
+  
+  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("fade-in");
+  });
+</script>
+  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    // Wait 2 seconds before fade out
+    setTimeout(() => {
+      // Hide splash screen
+      const splash = document.getElementById("splash-screen");
+      splash.classList.add("fade-out");
+
+      // Fade in page content
+      document.body.classList.add("page-ready");
+
+    }, 2000);
+  });
+</script>
+<div id="chart-container" style="margin-top: 20px;">
+  <h3 style="margin-bottom: 5px;"> Índice de seguridad mensual</h3>
+  <canvas id="municipioChart" width="280" height="160"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
+
